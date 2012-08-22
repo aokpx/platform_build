@@ -60,6 +60,12 @@ endif # BUILD_HOST_static
 HOST_GLOBAL_CFLAGS += -fPIC \
     -include $(call select-android-config-h,linux-x86)
 
+# This is a workaround for broken host compilers such as gcc <= 4.5
+# They report false positives with -Werror=strict-aliasing, causing
+# the build to fail.
+# gcc >= 4.6 host compilers are ok.
+HOST_GLOBAL_CFLAGS += -Wno-error=strict-aliasing
+
 # Disable new longjmp in glibc 2.11 and later. See bug 2967937.
 HOST_GLOBAL_CFLAGS += -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0
 
