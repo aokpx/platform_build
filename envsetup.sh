@@ -15,6 +15,9 @@ Invoke ". build/envsetup.sh" from your shell to add the following functions to y
 - mbot:     Builds for all devices using the psuedo buildbot
 - mkapush:  Same as mka with the addition of adb pushing to the device.
 - reposync: Parallel repo sync using ionice and SCHED_BATCH
+- aospremote: Add git remote for matching AOSP repository
+- cafremote: Add git remote for matching CodeAurora repository
+- linaroremote: Add git remote for matching Linaro repository
 
 Look at the source to view more functions. The complete list is:
 EOF
@@ -1301,6 +1304,60 @@ function reposync() {
             ;;
     esac
 }
+
+function aospremote()
+{
+    git remote rm aosp 2> /dev/null
+    if [ ! -d .git ]
+    then
+        echo ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
+    fi
+    PROJECT=`pwd | sed s#$ANDROID_BUILD_TOP/##g`
+    if (echo $PROJECT | grep -qv "^device")
+    then
+        PFX="platform/"
+    fi
+    git remote add aosp https://android.googlesource.com/$PFX$PROJECT
+    git fetch aosp
+    echo "Remote 'aosp' created"
+}
+export -f aospremote
+
+function cafremote()
+{
+    git remote rm caf 2> /dev/null
+    if [ ! -d .git ]
+    then
+        echo ".git directory not found. Please run this from the root directory of the CodeAurora repository you wish to set up."
+    fi
+    PROJECT=`pwd | sed s#$ANDROID_BUILD_TOP/##g`
+    if (echo $PROJECT | grep -qv "^device")
+    then
+        PFX="platform/"
+    fi
+    git remote add caf https://www.codeaurora.org/gitweb/quic/la//$PFX$PROJECT.git
+    git fetch caf
+    echo "Remote 'caf' created"
+}
+export -f cafremote
+
+function linaroremote()
+{
+    git remote rm linaro 2> /dev/null
+    if [ ! -d .git ]
+    then
+        echo ".git directory not found. Please run this from the root directory of the Linaro repository you wish to set up."
+    fi
+    PROJECT=`pwd | sed s#$ANDROID_BUILD_TOP/##g`
+    if (echo $PROJECT | grep -qv "^device")
+    then
+        PFX="platform/"
+    fi
+    git remote add linaro http://android.git.linaro.org/git/$PFX$PROJECT.git
+    git fetch linaro
+    echo "Remote 'linaro' created"
+}
+export -f linaroremote
 
 # Force JAVA_HOME to point to java 1.6 if it isn't already set
 function set_java_home() {
