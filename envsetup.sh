@@ -1359,7 +1359,7 @@ function linaroremote()
 }
 export -f linaroremote
 
-# Force JAVA_HOME to point to java 1.6 if it isn't already set
+# Force JAVA_HOME to point to OpenJDK 1.7
 function set_java_home() {
     if [ ! "$JAVA_HOME" ]; then
         case `uname -s` in
@@ -1367,7 +1367,7 @@ function set_java_home() {
                 export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home
                 ;;
             *)
-                export JAVA_HOME=/usr/lib/jvm/java-6-sun
+                export JAVA_HOME=$T/prebuilts/openjdk/jdk1.7.0_12
                 ;;
         esac
     fi
