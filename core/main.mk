@@ -122,7 +122,7 @@ endif
 
 
 # Check for the correct version of java
-java_version := $(shell java -version 2>&1 | head -n 1 | grep '^java .*[ "]1\.[67][\. "$$]')
+java_version := $(shell java -version 2>&1 | grep 'version' | grep '^java .*[ "]1\.[67][\. "$$]')
 ifneq ($(shell java -version 2>&1 | grep -i openjdk),)
 $(warning ************************************************************)
 $(warning AOSP errors out when using OpenJDK, saying you need to use)
