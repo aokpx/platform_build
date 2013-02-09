@@ -107,6 +107,11 @@ endef
 
 ifeq ($(TARGET_ARCH),arm)
     ifneq ($(USE_CCACHE),)
+     # Set ccache directory to top of build
+     export CCACHE_DIR := $(ANDROID_BUILD_TOP)/.ccache
+     export CCACHE_COMPILERCHECK := content
+     export CCACHE_SLOPPINESS := time_macros,include_file_mtime,file_macro
+     export CCACHE_BASEDIR := /
      # search executable
       ccache =
       ifneq ($(strip $(wildcard $(ANDROID_BUILD_TOP)/prebuilts/misc/$(HOST_PREBUILT_EXTRA_TAG)/ccache/ccache)),)
