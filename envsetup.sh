@@ -17,6 +17,7 @@ Invoke ". build/envsetup.sh" from your shell to add the following functions to y
 - reposync: Parallel repo sync using ionice and SCHED_BATCH
 - aospremote: Add git remote for matching AOSP repository
 - cafremote: Add git remote for matching CodeAurora repository
+- cmremote: Add git remote for matching CM repository.
 - linaroremote: Add git remote for matching Linaro repository
 
 Look at the source to view more functions. The complete list is:
@@ -1312,7 +1313,7 @@ function aospremote()
     then
         echo ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
     fi
-    PROJECT=`pwd | sed s#$ANDROID_BUILD_TOP/##g`
+    PROJECT=`pwd -P | sed s#$ANDROID_BUILD_TOP/##g`
     if (echo $PROJECT | grep -qv "^device")
     then
         PFX="platform/"
@@ -1330,16 +1331,34 @@ function cafremote()
     then
         echo ".git directory not found. Please run this from the root directory of the CodeAurora repository you wish to set up."
     fi
-    PROJECT=`pwd | sed s#$ANDROID_BUILD_TOP/##g`
+    PROJECT=`pwd -P | sed s#$ANDROID_BUILD_TOP/##g`
     if (echo $PROJECT | grep -qv "^device")
     then
         PFX="platform/"
     fi
-    git remote add caf https://www.codeaurora.org/gitweb/quic/la//$PFX$PROJECT.git
+    git remote add caf git://codeaurora.org/$PFX$PROJECT
     git fetch caf
     echo "Remote 'caf' created"
 }
 export -f cafremote
+
+function cmremote()
+{
+    git remote rm cm 2> /dev/null
+    if [ ! -d .git ]
+    then
+        echo ".git directory not found. Please run this from the root directory of the CyanogenMod repository you wish to set up."
+    fi
+    PROJECT=`pwd -P | sed s#$ANDROID_BUILD_TOP/##g | sed s#/#_#g`
+    if (echo $PROJECT | grep -qv "^device")
+    then
+        PFX="android_"
+    fi
+    git remote add cm git://github.com/CyanogenMod/$PFX$PROJECT.git
+    git fetch cm
+    echo "Remote 'cm' created"
+}
+export -f cmremote
 
 function linaroremote()
 {
@@ -1348,12 +1367,12 @@ function linaroremote()
     then
         echo ".git directory not found. Please run this from the root directory of the Linaro repository you wish to set up."
     fi
-    PROJECT=`pwd | sed s#$ANDROID_BUILD_TOP/##g`
+    PROJECT=`pwd -P | sed s#$ANDROID_BUILD_TOP/##g`
     if (echo $PROJECT | grep -qv "^device")
     then
         PFX="platform/"
     fi
-    git remote add linaro http://android.git.linaro.org/git/$PFX$PROJECT.git
+    git remote add linaro git://android.git.linaro.org/$PFX$PROJECT
     git fetch linaro
     echo "Remote 'linaro' created"
 }
