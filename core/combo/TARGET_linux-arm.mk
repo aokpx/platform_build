@@ -73,6 +73,8 @@ endif
 TARGET_NO_UNDEFINED_LDFLAGS := -Wl,--no-undefined
 
 TARGET_arm_CFLAGS :=    -O3 \
+                        -pipe \
+                        -ffast-math \
                         -fomit-frame-pointer \
                         -fstrict-aliasing    \
                         -funswitch-loops
@@ -84,6 +86,8 @@ TARGET_arm_CFLAGS :=    -O3 \
 ifeq ($(ARCH_ARM_HAVE_THUMB_SUPPORT),true)
 TARGET_thumb_CFLAGS :=  -mthumb \
                         -O3 \
+                        -pipe \
+                        -ffast-math \
                         -fomit-frame-pointer \
                         -fstrict-aliasing \
                         -Wstrict-aliasing=2 \
