@@ -308,8 +308,13 @@ ifneq (,$(user_variant))
     enable_target_debugging :=
   endif
 
-  # Forcefully turn off odex
-  WITH_DEXPREOPT := false
+  # Turn on Dalvik preoptimization if the host is running on Linux
+  # (since host Dalvik isn't built for non-Linux hosts).
+  ifeq ($(HOST_OS),linux)
+        WITH_DEXPREOPT := true
+  else
+        WITH_DEXPREOPT := false
+  endif
 
   # Disallow mock locations by default for user builds
   ADDITIONAL_DEFAULT_PROPERTIES += ro.allow.mock.location=0
