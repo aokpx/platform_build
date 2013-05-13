@@ -76,7 +76,12 @@ TARGET_arm_CFLAGS :=    -O3 \
                         -pipe \
                         -fomit-frame-pointer \
                         -fstrict-aliasing    \
-                        -funswitch-loops
+                        -funswitch-loops \
+                        -fno-tree-vectorize \
+                        -funsafe-loop-optimizations \
+                        -Wno-unused-parameter \
+                        -Wno-unused-value \
+                        -Wno-unused-function
 
 # Modules can choose to compile some source as thumb. As
 # non-thumb enabled targets are supported, this is treated
@@ -89,7 +94,12 @@ TARGET_thumb_CFLAGS :=  -mthumb \
                         -fomit-frame-pointer \
                         -fstrict-aliasing \
                         -Wstrict-aliasing=2 \
-                        -Werror=strict-aliasing
+                        -Werror=strict-aliasing \
+                        -fno-tree-vectorize \
+                        -funsafe-math-optimizations \
+                        -Wno-unused-parameter \
+                        -Wno-unused-value \
+                        -Wno-unused-function
 else
 TARGET_thumb_CFLAGS := $(TARGET_arm_CFLAGS)
 endif
