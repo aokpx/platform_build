@@ -19,6 +19,7 @@ Invoke ". build/envsetup.sh" from your shell to add the following functions to y
 - pstest:   cherry pick a patch from the AOKP gerrit instance.
 - taco:     Builds for a single device using the pseudo buildbot
 - reposync: Parallel repo sync using ionice and SCHED_BATCH
+- hostgcc:  Option to select host gcc version to build with
 - aospremote: Add git remote for matching AOSP repository
 - cafremote: Add git remote for matching CodeAurora repository
 - cmremote: Add git remote for matching CM repository.
@@ -1363,6 +1364,44 @@ function reposync() {
             schedtool -B -n 1 -e ionice -n 1 repo sync -j 4 "$@"
             ;;
     esac
+}
+
+# To use 4.8, you must install gcc-4.8 on the host machine.
+function hostgcc() {
+    echo "Host GCC choices are:"
+    echo "     1) 4.7"
+    echo "     2) 4.8"
+    echo
+
+    local ANSWER
+    local DEFAULT_GCC=4.7
+    while true; do
+        echo -n "Which would you like? ["$DEFAULT_GCC"] "
+        if [ -z "$1" ] ; then
+            read ANSWER
+        else
+            echo $1
+            ANSWER=$1
+        fi
+        case $ANSWER in
+        1|4.7)
+            hostgccversion=4.7
+            ;;
+        2|4.8)
+            hostgccversion=4.8
+            ;;
+        *)
+            echo "** Not a valid option: $ANSWER"
+            break
+            ;;
+        esac
+
+        unset HOST_CC HOST_CXX HOST_CPP
+        export HOST_CC=gcc-$hostgccversion
+        export HOST_CXX=g++-$hostgccversion
+        export HOST_CPP=cpp-$hostgccversion
+        break
+    done
 }
 
 function aospremote()
