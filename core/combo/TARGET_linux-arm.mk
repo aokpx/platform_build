@@ -78,7 +78,7 @@ TARGET_arm_CFLAGS :=    -O3 \
                         -fstrict-aliasing    \
                         -funswitch-loops \
                         -fno-tree-vectorize \
-                        -funsafe-loop-optimizations \
+                        -fno-aggressive-loop-optimizations \
                         -Wno-unused-parameter \
                         -Wno-unused-value \
                         -Wno-unused-function
@@ -96,7 +96,6 @@ TARGET_thumb_CFLAGS :=  -mthumb \
                         -Wstrict-aliasing=2 \
                         -Werror=strict-aliasing \
                         -fno-tree-vectorize \
-                        -funsafe-math-optimizations \
                         -Wno-unused-parameter \
                         -Wno-unused-value \
                         -Wno-unused-function
