@@ -698,7 +698,7 @@ function gettop
             T=
             while [ \( ! \( -f $TOPFILE \) \) -a \( $PWD != "/" \) ]; do
                 cd .. > /dev/null
-                T=`PWD= /bin/pwd`
+                T=`PWD= /bin/pwd -P`
             done
             cd $HERE > /dev/null
             if [ -f "$T/$TOPFILE" ]; then
