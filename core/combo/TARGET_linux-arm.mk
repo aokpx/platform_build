@@ -87,6 +87,8 @@ TARGET_thumb_CFLAGS :=  -mthumb \
                         -fstrict-aliasing \
                         -Wstrict-aliasing=2 \
                         -Werror=strict-aliasing \
+                        -fno-tree-vectorize \
+                        -fno-aggressive-loop-optimizations \
                         -Wno-unused-parameter \
                         -Wno-unused-value \
                         -Wno-unused-function
