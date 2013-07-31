@@ -210,7 +210,6 @@ endef
 _product_stash_var_list := $(_product_var_list) \
 	TARGET_ARCH \
 	TARGET_ARCH_VARIANT \
-	TARGET_ARCH_VARIANT_CPU \
 	TARGET_BOARD_PLATFORM \
 	TARGET_BOARD_PLATFORM_GPU \
 	TARGET_BOARD_KERNEL_HEADERS \
@@ -227,6 +226,7 @@ _product_stash_var_list := $(_product_var_list) \
 	TARGET_CPU_ABI \
 	TARGET_CPU_ABI2 \
 	TARGET_CPU_SMP \
+	TARGET_CPU_VARIANT \
 
 
 _product_stash_var_list += \
