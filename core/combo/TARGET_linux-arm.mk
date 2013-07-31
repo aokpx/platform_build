@@ -90,9 +90,6 @@ TARGET_thumb_CFLAGS :=  -mthumb \
                         -Wno-unused-parameter \
                         -Wno-unused-value \
                         -Wno-unused-function
-else
-TARGET_thumb_CFLAGS := $(TARGET_arm_CFLAGS)
-endif
 
 # Turn off strict-aliasing if we're building an AOSP variant without the
 # patchset...
