@@ -37,7 +37,7 @@ arch_variant_cflags += \
 	-mfloat-abi=soft
 endif
 
-ifneq (,$(findstring cpu=cortex-a9,$(TARGET_EXTRA_CFLAGS)))
+ifeq ($(TARGET_ARCH_VARIANT_CPU), cortex-a9)
 arch_variant_ldflags += \
 	-Wl,--no-fix-cortex-a8
 else
