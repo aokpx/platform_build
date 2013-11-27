@@ -1431,7 +1431,6 @@ function aospremote()
     git fetch aosp
     echo "Remote 'aosp' created"
 }
-export -f aospremote
 
 function cafremote()
 {
@@ -1449,7 +1448,6 @@ function cafremote()
     git fetch caf
     echo "Remote 'caf' created"
 }
-export -f cafremote
 
 function cmremote()
 {
@@ -1467,7 +1465,6 @@ function cmremote()
     git fetch cm
     echo "Remote 'cm' created"
 }
-export -f cmremote
 
 function linaroremote()
 {
@@ -1485,7 +1482,6 @@ function linaroremote()
     git fetch linaro
     echo "Remote 'linaro' created"
 }
-export -f linaroremote
 
 # Force JAVA_HOME to point to OpenJDK 1.7
 function set_java_home() {
